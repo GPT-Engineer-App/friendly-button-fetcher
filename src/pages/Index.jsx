@@ -24,8 +24,14 @@ const Index = () => {
         },
         body: JSON.stringify({ userPrompt }),
       });
-      const jsonResponse = await response.json();
-      const data = jsonResponse.message || "No message received";
+      let data;
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        const jsonResponse = await response.json();
+        data = jsonResponse.message || "No message received";
+      } else {
+        data = await response.text();
+      }
       setData(data);
     } catch (error) {
       setData(`Failed to fetch data: ${error.message}`);
