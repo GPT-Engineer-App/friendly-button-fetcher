@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, VStack, Button, Text, Input } from "@chakra-ui/react";
+import { Container, VStack, Button, Text, Input, Box } from "@chakra-ui/react";
 
 const Index = () => {
   const [data, setData] = useState("");
@@ -16,7 +16,8 @@ const Index = () => {
         },
         body: JSON.stringify({ userPrompt }),
       });
-      const data = await response.text();
+      const jsonResponse = await response.json();
+      const data = jsonResponse.message || "No message received";
       setData(data);
     } catch (error) {
       setData("Failed to fetch data");
@@ -31,7 +32,9 @@ const Index = () => {
         <Button onClick={() => fetchData(userInput)} isLoading={loading} loadingText="Fetching">
           Send Prompt
         </Button>
-        <Text fontSize="lg">{data}</Text>
+        <Box p={4} bg="blue.100" borderRadius="lg" boxShadow="md">
+          <Text fontSize="lg">{data}</Text>
+        </Box>
       </VStack>
     </Container>
   );
