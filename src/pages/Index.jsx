@@ -40,26 +40,23 @@ const Index = () => {
   };
 
   return (
-    <Container centerContent maxW="container.md" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-      <VStack spacing={6}>
+    <Container centerContent maxW="container.sm" height="100vh" display="flex" flexDirection="column" justifyContent="space-between" alignItems="center">
+      <VStack spacing={4} overflowY="auto" flex="1" width="100%" p={4}>
         <Heading as="h1" size="xl" color={useColorModeValue("blue.800", "blue.200")} mb={6}>
           Prompt Sender
         </Heading>
-        <Input placeholder="Enter your prompt" value={userInput} onChange={(e) => setUserInput(e.target.value)} mb={4} bg="blue.50" borderColor="blue.300" />
-        <Button leftIcon={<FaPaperPlane />} onClick={() => fetchData(userInput)} isLoading={loading} loadingText="Fetching" colorScheme="blue">
-          Send Prompt
+        <Input placeholder="Enter your prompt" value={userInput} onChange={(e) => setUserInput(e.target.value)} bg="blue.50" borderColor="blue.300" />
+        <Button leftIcon={<FaPaperPlane />} onClick={() => fetchData(userInput)} isLoading={loading} loadingText="Fetching" colorScheme="blue" width="full" mt={2}>
+          Send
         </Button>
         {error && <Text color="red.500">{error}</Text>}
         {messages.map((message, index) => (
-          <Box key={index} p={5} bg="blue.100" borderRadius="lg" boxShadow="md" mb={4}>
-            <Text fontSize="lg" fontWeight="bold" color="blue.700" mb={2}>
-              Prompt: {message.prompt}
+          <Box key={index} p={4} bg={index % 2 === 0 ? "blue.100" : "blue.200"} borderRadius="full" boxShadow="md" mb={2} alignSelf={index % 2 === 0 ? "start" : "end"}>
+            <Text fontSize="md" fontWeight="bold" color="blue.700">
+              {index % 2 === 0 ? `You: ${message.prompt}` : `Bot: ${message.response}`}
             </Text>
-            <Text fontSize="lg" color="blue.700">
-              Response: {message.response}
-            </Text>
-            <Button colorScheme="red" size="sm" onClick={() => setMessages(messages.filter((_, i) => i !== index))}>
-              Delete
+            <Button colorScheme="red" size="xs" onClick={() => setMessages(messages.filter((_, i) => i !== index))} position="absolute" top="1" right="1">
+              X
             </Button>
           </Box>
         ))}
