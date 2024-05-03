@@ -28,7 +28,7 @@ const Index = () => {
       const data = jsonResponse.message || "No message received";
       setData(data);
     } catch (error) {
-      setData("Failed to fetch data");
+      setData(`Failed to fetch data: ${error.message}`);
     }
     setLoading(false);
   };
