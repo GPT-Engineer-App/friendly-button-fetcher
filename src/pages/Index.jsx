@@ -3,7 +3,7 @@ import { Container, VStack, Button, Text, Input, Box, Heading, useColorModeValue
 import { FaPaperPlane } from "react-icons/fa";
 
 const Index = () => {
-  const [data, setData] = useState("");
+  const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [userInput, setUserInput] = useState("");
 
@@ -32,9 +32,9 @@ const Index = () => {
       } else {
         data = await response.text();
       }
-      setData(data);
+      setMessages((prevMessages) => [...prevMessages, { prompt: userPrompt, response: data }]);
     } catch (error) {
-      setData(`Failed to fetch data: ${error.message}`);
+      setMessages((prevMessages) => [...prevMessages, { prompt: userPrompt, response: `Failed to fetch data: ${error.message}` }]);
     }
     setLoading(false);
   };
@@ -50,11 +50,19 @@ const Index = () => {
           Send Prompt
         </Button>
         {error && <Text color="red.500">{error}</Text>}
-        <Box p={5} bg="blue.100" borderRadius="lg" boxShadow="md">
-          <Text fontSize="lg" color="blue.700">
-            {data}
-          </Text>
-        </Box>
+        {messages.map((message, index) => (
+          <Box key={index} p={5} bg="blue.100" borderRadius="lg" boxShadow="md" mb={4}>
+            <Text fontSize="lg" fontWeight="bold" color="blue.700" mb={2}>
+              Prompt: {message.prompt}
+            </Text>
+            <Text fontSize="lg" color="blue.700">
+              Response: {message.response}
+            </Text>
+            <Button colorScheme="red" size="sm" onClick={() => setMessages(messages.filter((_, i) => i !== index))}>
+              Delete
+            </Button>
+          </Box>
+        ))}
       </VStack>
     </Container>
   );
