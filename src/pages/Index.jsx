@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Container, VStack, Button, Text, Input, Box } from "@chakra-ui/react";
+import { Container, VStack, Button, Text, Input, Box, Heading, useColorModeValue } from "@chakra-ui/react";
+import { FaPaperPlane } from "react-icons/fa";
 
 const Index = () => {
   const [data, setData] = useState("");
@@ -27,13 +28,18 @@ const Index = () => {
 
   return (
     <Container centerContent maxW="container.md" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-      <VStack spacing={4}>
-        <Input placeholder="Enter your prompt" value={userInput} onChange={(e) => setUserInput(e.target.value)} mb={4} />
-        <Button onClick={() => fetchData(userInput)} isLoading={loading} loadingText="Fetching">
+      <VStack spacing={6}>
+        <Heading as="h1" size="xl" color={useColorModeValue("blue.800", "blue.200")} mb={6}>
+          Prompt Sender
+        </Heading>
+        <Input placeholder="Enter your prompt" value={userInput} onChange={(e) => setUserInput(e.target.value)} mb={4} bg="blue.50" borderColor="blue.300" />
+        <Button leftIcon={<FaPaperPlane />} onClick={() => fetchData(userInput)} isLoading={loading} loadingText="Fetching" colorScheme="blue">
           Send Prompt
         </Button>
-        <Box p={4} bg="blue.100" borderRadius="lg" boxShadow="md">
-          <Text fontSize="lg">{data}</Text>
+        <Box p={5} bg="blue.100" borderRadius="lg" boxShadow="md">
+          <Text fontSize="lg" color="blue.700">
+            {data}
+          </Text>
         </Box>
       </VStack>
     </Container>
