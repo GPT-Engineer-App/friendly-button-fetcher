@@ -7,8 +7,15 @@ const Index = () => {
   const [loading, setLoading] = useState(false);
   const [userInput, setUserInput] = useState("");
 
+  const [error, setError] = useState("");
   const fetchData = async (userPrompt) => {
+    if (!userPrompt.trim()) {
+      setError("Please enter a prompt before sending.");
+      setLoading(false);
+      return;
+    }
     setLoading(true);
+    setError("");
     try {
       const response = await fetch("https://qiadkr.buildship.run/hello", {
         method: "POST",
@@ -36,6 +43,7 @@ const Index = () => {
         <Button leftIcon={<FaPaperPlane />} onClick={() => fetchData(userInput)} isLoading={loading} loadingText="Fetching" colorScheme="blue">
           Send Prompt
         </Button>
+        {error && <Text color="red.500">{error}</Text>}
         <Box p={5} bg="blue.100" borderRadius="lg" boxShadow="md">
           <Text fontSize="lg" color="blue.700">
             {data}
