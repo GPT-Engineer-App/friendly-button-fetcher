@@ -24,14 +24,9 @@ const Index = () => {
         },
         body: JSON.stringify({ userPrompt }),
       });
-      let data;
       const contentType = response.headers.get("content-type");
-      if (contentType && contentType.includes("application/json")) {
-        const jsonResponse = await response.json();
-        data = jsonResponse.message || "No message received";
-      } else {
-        data = await response.text();
-      }
+      let data = contentType && contentType.includes("application/json") ? await response.json() : await response.text();
+      data = data.message || data || "No message received";
       setLoading(true);
       setError("");
       const newMessage = { prompt: userPrompt, response: "Loading..." };
@@ -40,14 +35,6 @@ const Index = () => {
         [selectedPageId]: [...(prevMessages[selectedPageId] || []), newMessage],
       }));
       try {
-        let data;
-        const contentType = response.headers.get("content-type");
-        if (contentType && contentType.includes("application/json")) {
-          const jsonResponse = await response.json();
-          data = jsonResponse.message || "No message received";
-        } else {
-          data = await response.text();
-        }
         setMessages((prevMessages) => ({
           ...prevMessages,
           [selectedPageId]: [...(prevMessages[selectedPageId] || []).slice(0, -1), { ...newMessage, response: data }],
