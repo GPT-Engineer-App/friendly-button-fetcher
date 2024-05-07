@@ -35,7 +35,7 @@ const Index = () => {
       const newMessage = { prompt: userPrompt, response: "Loading..." };
       setMessages((prevMessages) => ({
         ...prevMessages,
-        [selectedPageId]: [newMessage, ...(prevMessages[selectedPageId] || [])],
+        [selectedPageId]: [{ ...newMessage }, ...(prevMessages[selectedPageId] || [])],
       }));
       try {
         const response = await fetch("https://qiadkr.buildship.run/hello", {
