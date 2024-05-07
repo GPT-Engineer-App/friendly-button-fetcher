@@ -32,11 +32,37 @@ const Index = () => {
       } else {
         data = await response.text();
       }
-      const newMessage = { prompt: userPrompt, response: data };
+      const newMessage = { prompt: userPrompt, response: "Loading..." };
       setMessages((prevMessages) => ({
         ...prevMessages,
         [selectedPageId]: [newMessage, ...(prevMessages[selectedPageId] || [])],
       }));
+      try {
+        const response = await fetch("https://qiadkr.buildship.run/hello", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userPrompt }),
+        });
+        let data;
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          const jsonResponse = await response.json();
+          data = jsonResponse.message || "No message received";
+        } else {
+          data = await response.text();
+        }
+        setMessages((prevMessages) => ({
+          ...prevMessages,
+          [selectedPageId]: [{ ...newMessage, response: data }, ...(prevMessages[selectedPageId] || []).slice(1)],
+        }));
+      } catch (error) {
+        setMessages((prevMessages) => ({
+          ...prevMessages,
+          [selectedPageId]: [{ ...newMessage, response: `Failed to fetch data: ${error.message}` }, ...(prevMessages[selectedPageId] || []).slice(1)],
+        }));
+      }
     } catch (error) {
       setError(`Failed to fetch data: ${error.message}`);
     }
