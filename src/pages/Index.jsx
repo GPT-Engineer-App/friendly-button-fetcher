@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Flex, Box, Container, VStack, Button, Text, Input, Heading, useColorModeValue } from "@chakra-ui/react";
 import { FaPaperPlane } from "react-icons/fa";
+import PageManager from "../components/PageManager";
 
 const Index = () => {
   const [messages, setMessages] = useState([]);
@@ -39,12 +40,12 @@ const Index = () => {
     setLoading(false);
   };
 
+  const [pages, setPages] = useState([{ id: 1, name: "Page 1" }]);
+  const [selectedPageId, setSelectedPageId] = useState(1);
   return (
     <Flex direction="row" height="100vh">
       <Box width="200px" bg="blue.100" p={4}>
-        <Text fontSize="xl" fontWeight="bold">
-          Index Page
-        </Text>
+        <PageManager pages={pages} setPages={setPages} onSelectPage={setSelectedPageId} />
       </Box>
       <Container centerContent flex="1" maxW="container.md" display="flex" flexDirection="column" justifyContent="space-between" alignItems="center">
         <VStack spacing={4} overflowY="auto" flex="1" width="100%" p={4}>
