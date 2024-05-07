@@ -40,13 +40,6 @@ const Index = () => {
         [selectedPageId]: [...(prevMessages[selectedPageId] || []), newMessage],
       }));
       try {
-        const response = await fetch("https://qiadkr.buildship.run/hello", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ userPrompt }),
-        });
         let data;
         const contentType = response.headers.get("content-type");
         if (contentType && contentType.includes("application/json")) {
