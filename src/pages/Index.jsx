@@ -36,7 +36,7 @@ const Index = () => {
       setMessages((prevMessages) => {
         const updatedMessages = { ...prevMessages };
         const currentMessages = updatedMessages[selectedPageId] || [];
-        updatedMessages[selectedPageId] = [...currentMessages, newMessage];
+        updatedMessages[selectedPageId] = [newMessage, ...currentMessages];
         return updatedMessages;
       });
     } catch (error) {
