@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, VStack } from "@chakra-ui/react";
+import { Button, VStack, Icon } from "@chakra-ui/react";
+import { FaTrash } from "react-icons/fa";
 
 const PageManager = ({ pages, setPages, onSelectPage }) => {
   const addPage = () => {
@@ -15,15 +16,18 @@ const PageManager = ({ pages, setPages, onSelectPage }) => {
   return (
     <VStack>
       {pages.map((page) => (
-        <Button key={page.id} onClick={() => onSelectPage(page.id)} colorScheme="teal">
+        <Button key={page.id} onClick={() => onSelectPage(page.id)} colorScheme="teal" justifyContent="space-between">
           {page.name}
+          <FaTrash
+            onClick={(e) => {
+              e.stopPropagation();
+              deletePage(page.id);
+            }}
+          />
         </Button>
       ))}
       <Button onClick={addPage} colorScheme="green">
         Add Page
-      </Button>
-      <Button onClick={() => deletePage(onSelectPage)} colorScheme="red">
-        Delete Current Page
       </Button>
     </VStack>
   );

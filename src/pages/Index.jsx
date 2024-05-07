@@ -44,7 +44,7 @@ const Index = () => {
   const [selectedPageId, setSelectedPageId] = useState(1);
   return (
     <Flex direction="row" height="100vh">
-      <Box width="200px" bg="blue.100" p={4}>
+      <Box width="250px" bg="blue.200" p={5} boxShadow="md" borderRadius="md">
         <PageManager pages={pages} setPages={setPages} onSelectPage={setSelectedPageId} />
       </Box>
       <Container centerContent flex="1" maxW="container.md" display="flex" flexDirection="column" justifyContent="space-between" alignItems="center">
