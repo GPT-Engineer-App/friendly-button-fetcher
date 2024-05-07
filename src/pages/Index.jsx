@@ -40,7 +40,7 @@ const Index = () => {
         return updatedMessages;
       });
     } catch (error) {
-      setMessages((prevMessages) => [...prevMessages, { prompt: userPrompt, response: `Failed to fetch data: ${error.message}` }]);
+      setError(`Failed to fetch data: ${error.message}`);
     }
     setLoading(false);
   };
