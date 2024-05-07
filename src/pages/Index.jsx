@@ -33,12 +33,10 @@ const Index = () => {
         data = await response.text();
       }
       const newMessage = { prompt: userPrompt, response: data };
-      setMessages((prevMessages) => {
-        const updatedMessages = { ...prevMessages };
-        const currentMessages = updatedMessages[selectedPageId] || [];
-        updatedMessages[selectedPageId] = [newMessage, ...currentMessages];
-        return updatedMessages;
-      });
+      setMessages((prevMessages) => ({
+        ...prevMessages,
+        [selectedPageId]: [newMessage, ...(prevMessages[selectedPageId] || [])],
+      }));
     } catch (error) {
       setError(`Failed to fetch data: ${error.message}`);
     }
