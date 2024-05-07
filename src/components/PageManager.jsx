@@ -29,7 +29,7 @@ const PageManager = ({ pages, setPages, onSelectPage, messages, setMessages }) =
       {pages.map((page) => {
         const isEditing = page.id === editingPageId;
         return (
-          <Button key={page.id} onDoubleClick={() => setEditingPageId(page.id)} colorScheme="teal" justifyContent="space-between">
+          <Button key={page.id} onClick={() => onSelectPage(page.id)} onDoubleClick={() => setEditingPageId(page.id)} colorScheme="teal" justifyContent="space-between">
             {isEditing ? (
               <Input
                 value={editingName}

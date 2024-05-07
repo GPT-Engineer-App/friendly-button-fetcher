@@ -48,7 +48,7 @@ const Index = () => {
   return (
     <Flex direction="row" height="100vh">
       <Box width="250px" bg="blue.200" p={5} boxShadow="md" borderRadius="md">
-        <PageManager pages={pages} setPages={setPages} onSelectPage={(id) => setSelectedPageId(id)} />
+        <PageManager pages={pages} setPages={setPages} onSelectPage={setSelectedPageId} />
       </Box>
       <Container centerContent flex="1" maxW="container.md" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
         <VStack spacing={4} overflowY="auto" flex="1" width="100%" p={4} minHeight="0">
