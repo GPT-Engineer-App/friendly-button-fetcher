@@ -44,7 +44,7 @@ const Index = () => {
   };
 
   const [pages, setPages] = useState([{ id: 1, name: "Page 1" }]);
-  const [selectedPageId, setSelectedPageId] = useState(1);
+  const [selectedPageId, setSelectedPageId] = useState(pages[0].id);
   return (
     <Flex direction="row" height="100vh">
       <Box width="250px" bg="blue.200" p={5} boxShadow="md" borderRadius="md">
@@ -55,19 +55,11 @@ const Index = () => {
           <Heading as="h1" size="xl" color={useColorModeValue("blue.800", "blue.200")} mb={6} textAlign="center">
             {pages.find((page) => page.id === selectedPageId)?.name || "Prompt Sender"}
           </Heading>
-          <Input placeholder="Enter your prompt" value={userInput} onChange={(e) => setUserInput(e.target.value)} bg="blue.50" borderColor="blue.300" />
-          <Button leftIcon={<FaPaperPlane />} onClick={() => fetchData(userInput)} isLoading={loading} loadingText="Fetching" colorScheme="blue" width="full" mt={2}>
-            Send
-          </Button>
+          <Input placeholder="Enter your prompt" value={userInput} onChange={(e) => setUserInput(e.target.value)} onKeyPress={(e) => e.key === "Enter" && fetchData(userInput)} bg="blue.50" borderColor="blue.300" isLoading={loading} loadingText="Fetching" />
           {error && <Text color="red.500">{error}</Text>}
           {(messages[selectedPageId] || []).map((message, index) => (
-            <Box key={index} p={4} bg={index % 2 === 0 ? "blue.50" : "gray.300"} borderRadius="lg" boxShadow="md" mb={2} alignSelf={index % 2 === 0 ? "start" : "end"}>
-              <Text fontSize="md" fontWeight="bold" color="blue.700">
-                {index % 2 === 0 ? `You: ${message.prompt}` : `Bot: ${message.response}`}
-              </Text>
-              <Button colorScheme="red" size="xs" onClick={() => setMessages(messages.filter((_, i) => i !== index))} position="absolute" top="1" right="1">
-                X
-              </Button>
+            <Box key={index} p={2} bg="gray.700" color="white" borderRadius="md" mb={1} alignSelf={index % 2 === 0 ? "start" : "end"}>
+              <Text fontSize="sm">{index % 2 === 0 ? `You: ${message.prompt}` : `Bot: ${message.response}`}</Text>
             </Box>
           ))}
         </VStack>
