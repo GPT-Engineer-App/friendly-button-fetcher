@@ -32,10 +32,12 @@ const Index = () => {
       } else {
         data = await response.text();
       }
+      setLoading(true);
+      setError("");
       const newMessage = { prompt: userPrompt, response: "Loading..." };
       setMessages((prevMessages) => ({
         ...prevMessages,
-        [selectedPageId]: [{ ...newMessage }, ...(prevMessages[selectedPageId] || [])],
+        [selectedPageId]: [...(prevMessages[selectedPageId] || []), newMessage],
       }));
       try {
         const response = await fetch("https://qiadkr.buildship.run/hello", {
@@ -55,13 +57,15 @@ const Index = () => {
         }
         setMessages((prevMessages) => ({
           ...prevMessages,
-          [selectedPageId]: [{ ...newMessage, response: data }, ...(prevMessages[selectedPageId] || []).slice(1)],
+          [selectedPageId]: [...(prevMessages[selectedPageId] || []).slice(0, -1), { ...newMessage, response: data }],
         }));
       } catch (error) {
         setMessages((prevMessages) => ({
           ...prevMessages,
-          [selectedPageId]: [{ ...newMessage, response: `Failed to fetch data: ${error.message}` }, ...(prevMessages[selectedPageId] || []).slice(1)],
+          [selectedPageId]: [...(prevMessages[selectedPageId] || []).slice(0, -1), { ...newMessage, response: `Failed to fetch data: ${error.message}` }],
         }));
+      } finally {
+        setLoading(false);
       }
     } catch (error) {
       setError(`Failed to fetch data: ${error.message}`);
