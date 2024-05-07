@@ -33,10 +33,12 @@ const Index = () => {
         data = await response.text();
       }
       const newMessage = { prompt: userPrompt, response: data };
-      setMessages((prevMessages) => ({
-        ...prevMessages,
-        [selectedPageId]: [...(prevMessages[selectedPageId] || []), newMessage],
-      }));
+      setMessages((prevMessages) => {
+        const updatedMessages = { ...prevMessages };
+        const currentMessages = updatedMessages[selectedPageId] || [];
+        updatedMessages[selectedPageId] = [...currentMessages, newMessage];
+        return updatedMessages;
+      });
     } catch (error) {
       setMessages((prevMessages) => [...prevMessages, { prompt: userPrompt, response: `Failed to fetch data: ${error.message}` }]);
     }
