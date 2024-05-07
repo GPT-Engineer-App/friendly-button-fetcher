@@ -11,7 +11,6 @@ const Index = () => {
   const fetchData = async (userPrompt) => {
     if (!userPrompt.trim()) {
       setError("Please enter a prompt before sending.");
-      setLoading(false);
       return;
     }
     setLoading(true);
@@ -51,7 +50,7 @@ const Index = () => {
         </Button>
         {error && <Text color="red.500">{error}</Text>}
         {messages.map((message, index) => (
-          <Box key={index} p={4} bg={index % 2 === 0 ? "blue.100" : "blue.200"} borderRadius="full" boxShadow="md" mb={2} alignSelf={index % 2 === 0 ? "start" : "end"}>
+          <Box key={index} p={4} bg={index % 2 === 0 ? "blue.50" : "gray.300"} borderRadius="lg" boxShadow="md" mb={2} alignSelf={index % 2 === 0 ? "start" : "end"}>
             <Text fontSize="md" fontWeight="bold" color="blue.700">
               {index % 2 === 0 ? `You: ${message.prompt}` : `Bot: ${message.response}`}
             </Text>
