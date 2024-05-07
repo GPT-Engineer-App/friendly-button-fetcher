@@ -4,7 +4,7 @@ import { FaPaperPlane } from "react-icons/fa";
 import PageManager from "../components/PageManager";
 
 const Index = () => {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState({});
   const [loading, setLoading] = useState(false);
   const [userInput, setUserInput] = useState("");
 
@@ -33,7 +33,10 @@ const Index = () => {
         data = await response.text();
       }
       const newMessage = { prompt: userPrompt, response: data };
-      setMessages((prevMessages) => [...prevMessages, { prompt: userPrompt }, newMessage]);
+      setMessages((prevMessages) => ({
+        ...prevMessages,
+        [selectedPageId]: [...(prevMessages[selectedPageId] || []), newMessage],
+      }));
     } catch (error) {
       setMessages((prevMessages) => [...prevMessages, { prompt: userPrompt, response: `Failed to fetch data: ${error.message}` }]);
     }
@@ -57,7 +60,7 @@ const Index = () => {
             Send
           </Button>
           {error && <Text color="red.500">{error}</Text>}
-          {messages.map((message, index) => (
+          {(messages[selectedPageId] || []).map((message, index) => (
             <Box key={index} p={4} bg={index % 2 === 0 ? "blue.50" : "gray.300"} borderRadius="lg" boxShadow="md" mb={2} alignSelf={index % 2 === 0 ? "start" : "end"}>
               <Text fontSize="md" fontWeight="bold" color="blue.700">
                 {index % 2 === 0 ? `You: ${message.prompt}` : `Bot: ${message.response}`}

@@ -2,10 +2,14 @@ import React from "react";
 import { Button, VStack, Icon } from "@chakra-ui/react";
 import { FaTrash } from "react-icons/fa";
 
-const PageManager = ({ pages, setPages, onSelectPage }) => {
+const PageManager = ({ pages, setPages, onSelectPage, messages, setMessages }) => {
   const addPage = () => {
-    const newId = pages.length + 1;
-    setPages([...pages, { id: newId, name: `Page ${newId}` }]);
+    const newId = Date.now();
+    setPages([...pages, { id: newId, name: `Page ${pages.length + 1}` }]);
+    setMessages((prevMessages) => ({
+      ...prevMessages,
+      [newId]: [],
+    }));
   };
 
   const deletePage = (id) => {
