@@ -50,10 +50,10 @@ const Index = () => {
       <Box width="250px" bg="blue.200" p={5} boxShadow="md" borderRadius="md">
         <PageManager pages={pages} setPages={setPages} onSelectPage={setSelectedPageId} />
       </Box>
-      <Container centerContent flex="1" maxW="container.md" display="flex" flexDirection="column" justifyContent="space-between" alignItems="center">
+      <Container centerContent flex="1" maxW="container.md" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
         <VStack spacing={4} overflowY="auto" flex="1" width="100%" p={4}>
-          <Heading as="h1" size="xl" color={useColorModeValue("blue.800", "blue.200")} mb={6}>
-            Prompt Sender
+          <Heading as="h1" size="xl" color={useColorModeValue("blue.800", "blue.200")} mb={6} textAlign="center">
+            {pages.find((page) => page.id === selectedPageId)?.name || "Prompt Sender"}
           </Heading>
           <Input placeholder="Enter your prompt" value={userInput} onChange={(e) => setUserInput(e.target.value)} bg="blue.50" borderColor="blue.300" />
           <Button leftIcon={<FaPaperPlane />} onClick={() => fetchData(userInput)} isLoading={loading} loadingText="Fetching" colorScheme="blue" width="full" mt={2}>

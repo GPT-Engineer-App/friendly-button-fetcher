@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, VStack, Icon } from "@chakra-ui/react";
+import React, { useState } from "react";
+import { Button, VStack, Input } from "@chakra-ui/react";
 import { FaTrash } from "react-icons/fa";
 
 const PageManager = ({ pages, setPages, onSelectPage, messages, setMessages }) => {
@@ -17,19 +17,41 @@ const PageManager = ({ pages, setPages, onSelectPage, messages, setMessages }) =
     if (id === onSelectPage) onSelectPage(pages[0].id);
   };
 
+  const [editingPageId, setEditingPageId] = useState(null);
+  const [editingName, setEditingName] = useState("");
+
+  const updatePageName = (id, newName) => {
+    setPages(pages.map((page) => (page.id === id ? { ...page, name: newName } : page)));
+  };
+
   return (
-    <VStack>
-      {pages.map((page) => (
-        <Button key={page.id} onClick={() => onSelectPage(page.id)} colorScheme="teal" justifyContent="space-between">
-          {page.name}
-          <FaTrash
-            onClick={(e) => {
-              e.stopPropagation();
-              deletePage(page.id);
-            }}
-          />
-        </Button>
-      ))}
+    <VStack align="stretch">
+      {pages.map((page) => {
+        const isEditing = page.id === editingPageId;
+        return (
+          <Button key={page.id} onDoubleClick={() => setEditingPageId(page.id)} colorScheme="teal" justifyContent="space-between">
+            {isEditing ? (
+              <Input
+                value={editingName}
+                onChange={(e) => setEditingName(e.target.value)}
+                onBlur={() => {
+                  updatePageName(page.id, editingName);
+                  setEditingPageId(null);
+                }}
+                autoFocus
+              />
+            ) : (
+              page.name
+            )}
+            <FaTrash
+              onClick={(e) => {
+                e.stopPropagation();
+                deletePage(page.id);
+              }}
+            />
+          </Button>
+        );
+      })}
       <Button onClick={addPage} colorScheme="green">
         Add Page
       </Button>
