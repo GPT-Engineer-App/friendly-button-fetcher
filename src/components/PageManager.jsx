@@ -29,7 +29,7 @@ const PageManager = ({ pages, setPages, onSelectPage, messages, setMessages }) =
       {pages.map((page) => {
         const isEditing = page.id === editingPageId;
         return (
-          <Button key={page.id} onClick={() => onSelectPage(page.id)} onDoubleClick={() => setEditingPageId(page.id)} colorScheme="teal" justifyContent="space-between">
+          <Button key={page.id} onClick={() => onSelectPage(page.id)} onDoubleClick={() => setEditingPageId(page.id)} colorScheme="blue" justifyContent="space-between" borderRadius="md" boxShadow="sm">
             {isEditing ? (
               <Input
                 value={editingName}
@@ -52,7 +52,7 @@ const PageManager = ({ pages, setPages, onSelectPage, messages, setMessages }) =
           </Button>
         );
       })}
-      <Button onClick={addPage} colorScheme="green">
+      <Button onClick={addPage} colorScheme="blue" borderRadius="md" boxShadow="sm">
         Add Page
       </Button>
     </VStack>

@@ -57,12 +57,12 @@ const Index = () => {
   const [selectedPageId, setSelectedPageId] = useState(pages[0].id);
   return (
     <Flex direction="row" height="100vh">
-      <Box width="250px" bg="blue.200" p={5} boxShadow="md" borderRadius="md">
+      <Box width="250px" bg="gray.100" p={5} boxShadow="sm" borderRadius="lg">
         <PageManager pages={pages} setPages={setPages} onSelectPage={setSelectedPageId} />
       </Box>
       <Container centerContent flex="1" maxW="container.md" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
         <VStack spacing={4} overflowY="auto" flex="1" width="100%" p={4} minHeight="0">
-          <Heading as="h1" size="xl" color={useColorModeValue("blue.800", "blue.200")} mb={6} textAlign="center">
+          <Heading as="h1" size="xl" color={useColorModeValue("gray.800", "gray.200")} mb={6} textAlign="center">
             {pages.find((page) => page.id === selectedPageId)?.name || "Prompt Sender"}
           </Heading>
           <Input
@@ -75,8 +75,8 @@ const Index = () => {
                 setUserInput("");
               }
             }}
-            bg="blue.50"
-            borderColor="blue.300"
+            bg="gray.50"
+            borderColor="gray.300"
             isLoading={loading}
             loadingText="Fetching"
           />
