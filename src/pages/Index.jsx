@@ -32,10 +32,10 @@ const Index = () => {
       } else {
         data = await response.text();
       }
+      const newMessage = { prompt: userPrompt, response: data };
       setMessages((prevMessages) => {
         const updatedMessages = { ...prevMessages };
         const currentMessages = updatedMessages[selectedPageId] || [];
-        const newMessage = { prompt: userPrompt, response: data };
         updatedMessages[selectedPageId] = [newMessage, ...currentMessages];
         return updatedMessages;
       });
