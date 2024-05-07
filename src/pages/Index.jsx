@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, VStack, Button, Text, Input, Box, Heading, useColorModeValue } from "@chakra-ui/react";
+import { Flex, Box, Container, VStack, Button, Text, Input, Heading, useColorModeValue } from "@chakra-ui/react";
 import { FaPaperPlane } from "react-icons/fa";
 
 const Index = () => {
@@ -40,28 +40,35 @@ const Index = () => {
   };
 
   return (
-    <Container centerContent maxW="container.sm" height="100vh" display="flex" flexDirection="column" justifyContent="space-between" alignItems="center">
-      <VStack spacing={4} overflowY="auto" flex="1" width="100%" p={4}>
-        <Heading as="h1" size="xl" color={useColorModeValue("blue.800", "blue.200")} mb={6}>
-          Prompt Sender
-        </Heading>
-        <Input placeholder="Enter your prompt" value={userInput} onChange={(e) => setUserInput(e.target.value)} bg="blue.50" borderColor="blue.300" />
-        <Button leftIcon={<FaPaperPlane />} onClick={() => fetchData(userInput)} isLoading={loading} loadingText="Fetching" colorScheme="blue" width="full" mt={2}>
-          Send
-        </Button>
-        {error && <Text color="red.500">{error}</Text>}
-        {messages.map((message, index) => (
-          <Box key={index} p={4} bg={index % 2 === 0 ? "blue.50" : "gray.300"} borderRadius="lg" boxShadow="md" mb={2} alignSelf={index % 2 === 0 ? "start" : "end"}>
-            <Text fontSize="md" fontWeight="bold" color="blue.700">
-              {index % 2 === 0 ? `You: ${message.prompt}` : `Bot: ${message.response}`}
-            </Text>
-            <Button colorScheme="red" size="xs" onClick={() => setMessages(messages.filter((_, i) => i !== index))} position="absolute" top="1" right="1">
-              X
-            </Button>
-          </Box>
-        ))}
-      </VStack>
-    </Container>
+    <Flex direction="row" height="100vh">
+      <Box width="200px" bg="blue.100" p={4}>
+        <Text fontSize="xl" fontWeight="bold">
+          Index Page
+        </Text>
+      </Box>
+      <Container centerContent flex="1" maxW="container.md" display="flex" flexDirection="column" justifyContent="space-between" alignItems="center">
+        <VStack spacing={4} overflowY="auto" flex="1" width="100%" p={4}>
+          <Heading as="h1" size="xl" color={useColorModeValue("blue.800", "blue.200")} mb={6}>
+            Prompt Sender
+          </Heading>
+          <Input placeholder="Enter your prompt" value={userInput} onChange={(e) => setUserInput(e.target.value)} bg="blue.50" borderColor="blue.300" />
+          <Button leftIcon={<FaPaperPlane />} onClick={() => fetchData(userInput)} isLoading={loading} loadingText="Fetching" colorScheme="blue" width="full" mt={2}>
+            Send
+          </Button>
+          {error && <Text color="red.500">{error}</Text>}
+          {messages.map((message, index) => (
+            <Box key={index} p={4} bg={index % 2 === 0 ? "blue.50" : "gray.300"} borderRadius="lg" boxShadow="md" mb={2} alignSelf={index % 2 === 0 ? "start" : "end"}>
+              <Text fontSize="md" fontWeight="bold" color="blue.700">
+                {index % 2 === 0 ? `You: ${message.prompt}` : `Bot: ${message.response}`}
+              </Text>
+              <Button colorScheme="red" size="xs" onClick={() => setMessages(messages.filter((_, i) => i !== index))} position="absolute" top="1" right="1">
+                X
+              </Button>
+            </Box>
+          ))}
+        </VStack>
+      </Container>
+    </Flex>
   );
 };
 
