@@ -51,11 +51,25 @@ const Index = () => {
         <PageManager pages={pages} setPages={setPages} onSelectPage={setSelectedPageId} />
       </Box>
       <Container centerContent flex="1" maxW="container.md" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-        <VStack spacing={4} overflowY="auto" flex="1" width="100%" p={4}>
+        <VStack spacing={4} overflowY="auto" flex="1" width="100%" p={4} minHeight="0">
           <Heading as="h1" size="xl" color={useColorModeValue("blue.800", "blue.200")} mb={6} textAlign="center">
             {pages.find((page) => page.id === selectedPageId)?.name || "Prompt Sender"}
           </Heading>
-          <Input placeholder="Enter your prompt" value={userInput} onChange={(e) => setUserInput(e.target.value)} onKeyPress={(e) => e.key === "Enter" && fetchData(userInput)} bg="blue.50" borderColor="blue.300" isLoading={loading} loadingText="Fetching" />
+          <Input
+            placeholder="Enter your prompt"
+            value={userInput}
+            onChange={(e) => setUserInput(e.target.value)}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                fetchData(userInput);
+                setUserInput("");
+              }
+            }}
+            bg="blue.50"
+            borderColor="blue.300"
+            isLoading={loading}
+            loadingText="Fetching"
+          />
           {error && <Text color="red.500">{error}</Text>}
           {(messages[selectedPageId] || []).map((message, index) => (
             <Box key={index} p={2} bg="gray.700" color="white" borderRadius="md" mb={1} alignSelf={index % 2 === 0 ? "start" : "end"}>
