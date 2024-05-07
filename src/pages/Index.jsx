@@ -31,7 +31,8 @@ const Index = () => {
       } else {
         data = await response.text();
       }
-      setMessages((prevMessages) => [...prevMessages, { prompt: userPrompt, response: data }]);
+      const newMessage = { prompt: userPrompt, response: data };
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
     } catch (error) {
       setMessages((prevMessages) => [...prevMessages, { prompt: userPrompt, response: `Failed to fetch data: ${error.message}` }]);
     }
